@@ -1,0 +1,45 @@
+h1. rah_default_category
+
+p. A tiny "Textpattern":http://www.textpattern.com plugin that allows you to pick a default category for articles, just like you can select a default section. This plugin is an answer to a request by "jim.":http://forum.textpattern.com/viewtopic.php?id=29148
+
+* Version: 0.1
+* Updated: 2008/12/11 11:00 GMT+2
+
+h3. Table of Contents
+
+* "Intro and description":#intro-and-description
+* "List of features":#list-of-features
+* "Requirements":#requirements
+* "Installation and usage":#installation-and-usage
+* "Changelog":#changelog
+
+h3(#intro-and-description). Intro and description
+
+p. The plugin, rah_default_category allows site authors to pick default categories, just like you can pick a default section. You can select seperete default categories for both, Category 1 and Category 2 via simple interface located under your Textpattern install's Extensions tab.
+
+h3(#list-of-features). List of features
+
+* Select default categories for articles, just like you can select default section.
+* Simple valid interface under _Textpattern backend / Extensions / Default Category_.
+* Valid XHTML and clean Javascript.
+
+h3(#requirements). Requirements
+
+p. Rah_default_category minimum requirements:
+
+* Textpattern 4.0.4+
+* Textpattern with jQuery
+
+p. Recommended:
+
+* Textpattern 4.0.6+
+
+h3(#installation-and-usage). Installation and usage
+
+p. The general simple behavior stands: paste plugin code to the plugin installer textarea and run the automatic setup. Then just activate the plugin and it's ready, you can go to _Extensions / Default category_ and pick defaults up.
+
+h3(#changelog). Changelog
+
+p. *Version 0.1*
+
+* First release.
