@@ -1,7 +1,7 @@
 <?php	##################
 	#
 	#	rah_default_category-plugin for Textpattern
-	#	version 0.5
+	#	version 0.6
 	#	by Jukka Svahn
 	#	http://rahforum.biz
 	#
@@ -57,11 +57,11 @@
 					$textarray[$string] = $translation;
 		}
 		
-		$version = '0.4';
+		$version = '0.6';
 		
 		$current = 
 			isset($prefs['rah_default_category_version']) ? 
-				$prefs['rah_default_category_version'] : '';
+				$prefs['rah_default_category_version'] : 'base';
 		
 		if($current == $version)
 			return;
@@ -72,12 +72,11 @@
 				'default_category_2' => ''
 			);
 		
-		if(!$current) {
+		/*
+			Migrate preferences format from <= 0.3 to >= 0.4
+		*/
 		
-			/*
-				Run migration and clean-up if older version was
-				installed
-			*/
+		if($current == 'base') {
 		
 			@$rs = 
 				safe_rows(
