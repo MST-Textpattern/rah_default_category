@@ -41,25 +41,7 @@
 			return;
 		}
 		
-		global $prefs, $event, $textarray;
-		
-		if($event == 'prefs') {
-			
-			/*
-				Generate language strings if
-				not existing
-			*/
-			
-			foreach(
-				array(
-					'rah_defcat' => 'Write Tab\'s Default Categories',
-					'rah_default_category_1' => 'Default category 1',
-					'rah_default_category_2' => 'Default category 2',
-				) as $string => $translation
-			)
-				if(!isset($textarray[$string]))
-					$textarray[$string] = $translation;
-		}
+		global $prefs;
 		
 		$version = '0.6';
 		
