@@ -1,82 +1,125 @@
 <?php	##################
 	#
 	#	rah_default_category-plugin for Textpattern
-	#	version 0.3
+	#	version 0.4
 	#	by Jukka Svahn
 	#	http://rahforum.biz
+	#
+	#	Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
+	#	Licensed under GNU Genral Public License version 2
+	#	http://www.gnu.org/licenses/gpl-2.0.html
 	#
 	###################
 
 	if(@txpinterface == 'admin') {
+		rah_default_category_install();
+		add_privs('plugin_prefs.rah_default_category','1,2');
+		register_callback('rah_default_category_prefs','plugin_prefs.rah_default_category');
+		register_callback('rah_default_category_install','plugin_lifecycle.rah_default_category');
 		register_callback('rah_default_category','admin_side','head_end');
-		register_callback('rah_default_category_css','admin_side','head_end');
-		add_privs('rah_default_category','1,2');
-		register_tab('extensions','rah_default_category','Default Category');
-		register_callback('rah_default_category_page','rah_default_category');
 	}
 
 /**
-	Installer
+	Installer and uninstaller. Keeps it tidy.
+	@param $event string The admin-side event.
+	@param $step string The admin-side, plugin-lifecycle step.	
 */
 
-	function rah_default_category_install() {
-		safe_query(
-			"CREATE TABLE IF NOT EXISTS ".safe_pfx('rah_default_category')." (
-				`name` VARCHAR(255) NOT NULL,
-				`value` VARCHAR(255) NOT NULL,
-				PRIMARY KEY(`name`)
-			)"
-		);
+	function rah_default_category_install($event='',$step='') {
 		
-		rah_default_category_add_prefs(
+		if($step == 'deleted') {
+			
+			safe_delete(
+				'txp_prefs',
+				"name like 'rah_default_category_%'"
+			);
+			
+			return;
+		}
+		
+		global $prefs, $event, $textarray;
+		
+		if($event == 'prefs') {
+			
+			/*
+				Generate language strings if
+				not existing
+			*/
+			
+			foreach(
+				array(
+					'rah_defcat' => 'Write Tab\'s Default Categories',
+					'rah_default_category_1' => 'Default category 1',
+					'rah_default_category_2' => 'Default category 2',
+				) as $string => $translation
+			)
+				if(!isset($textarray[$string]))
+					$textarray[$string] = $translation;
+		}
+		
+		$version = '0.4';
+		
+		$current = 
+			isset($prefs['rah_default_category_version']) ? 
+				$prefs['rah_default_category_version'] : '';
+		
+		if($current == $version)
+			return;
+			
+		$default = 
 			array(
 				'default_category_1' => '',
 				'default_category_2' => ''
-			)
-		);
-	}
-
-/**
-	Adds new prefs from an array
-*/
-
-	function rah_default_category_add_prefs($array) {
-		
-		foreach($array as $key => $val)
-			if(
-				safe_count(
-					'rah_default_category',
-					"name='".doSlash($key)."'"
-				) == 0
-			)
-				safe_insert(
-					'rah_default_category',
-					"name='".doSlash($key)."',value='".doSlash($val)."'"
-				);
-
-	}
-
-/**
-	Gets the preferences
-*/
-
-	function rah_default_category_prefs() {
-		
-		$out = array();
-		
-		$rs = 
-			safe_rows(
-				'name,value',
-				'rah_default_category',
-				'1=1'
 			);
 		
-		foreach($rs as $a)
-			$out[$a['name']] = $a['value'];
-			
-		return 
-			$out;
+		if(!$current) {
 		
+			/*
+				Run migration and clean-up if older version was
+				installed
+			*/
+		
+			@$rs = 
+				safe_rows(
+					'name, value',
+					'rah_default_category',
+					'1=1'
+				);
+		
+			if(!empty($rs) && is_array($rs)) {
+				foreach($rs as $a)
+					if(isset($default[$a['name']]))
+						$default[$a['name']] = $a['value'];
+			
+				@safe_query(
+					'DROP TABLE IF EXISTS '.safe_pfx('rah_default_category')
+				);
+			}
+		}
+		
+		/*
+			Add preference strings
+		*/
+		
+		foreach($default as $key => $val) {
+			if(!isset($prefs['rah_' . $key])) {
+				safe_insert(
+					'txp_prefs',
+					"prefs_id=1,
+					name='rah_".$key."',
+					val='".doSlash($val)."',
+					type=1,
+					event='rah_defcat',
+					html='rah_default_category_list',
+					position=". ($key == 'default_category_1' ? 245 : 246)
+				);
+				
+				$prefs['rah_' . $key ] = $val;
+			}
+		}
+		
+		set_pref('rah_default_category_version',$version,'rah_defcat',2,'',0);
+		$prefs['rah_default_category_version'] = $version;
 	}
 
 /**
@@ -85,14 +128,13 @@
 
 	function rah_default_category() {
 		
-		global $event;
+		global $event, $prefs;
 		
-		if($event != 'article')
-			return;
-		
-		@$prefs = rah_default_category_prefs();
-		
-		if(!isset($prefs['default_category_2']))
+		if(
+			$event != 'article' || 
+			!isset($prefs['rah_default_category_1']) ||
+			!isset($prefs['rah_default_category_2'])
+		)
 			return;
 		
 		/*
@@ -102,14 +144,12 @@
 		if((isset($_POST) && !empty($_POST)) || gps('ID'))
 			return;
 		
-		extract($prefs);
-		
 		$js = 
-			(!empty($default_category_1) ? 
-				'$("#category-1 option[value=\''.str_replace("'","\'",$default_category_1).'\']").attr("selected","selected");' : ''
+			(!empty($prefs['rah_default_category_1']) ? 
+				'$("#category-1 option[value=\''.str_replace("'","\'",$prefs['rah_default_category_1']).'\']").attr("selected","selected");' : ''
 			).
-			(!empty($default_category_2) ? 
-				'$("#category-2 option[value=\''.str_replace("'","\'",$default_category_2).'\']").attr("selected","selected");' : ''
+			(!empty($prefs['rah_default_category_2']) ? 
+				'$("#category-2 option[value=\''.str_replace("'","\'",$prefs['rah_default_category_2']).'\']").attr("selected","selected");' : ''
 			)
 		;
 		
@@ -118,104 +158,25 @@
 
 		echo <<<EOF
 
-			<script language="javascript" type="text/javascript">
+			<script type="text/javascript">
+				<!--
 				$(document).ready(function() {
 					{$js}
 				});
+				-->
 			</script>
 EOF;
 	}
 
 /**
-	Delivers the panels
+	Lists all available categories
+	@param $name string Preferences field's name.
+	@param $val string Currently save value
+	@return string HTML select field.
 */
 
-	function rah_default_category_page() {
-		require_privs('rah_default_category');
-		global $step;
+	function rah_default_category_list($name,$val) {
 		
-		if($step == 'rah_default_category_save')
-			rah_default_category_save();
-		else
-			rah_default_category_edit();
-	}
-
-/**
-	Adds styles for the panels
-*/
-
-	function rah_default_category_css() {
-		global $event;
-		if($event != 'rah_default_category')
-			return;
-		echo <<<EOF
-			<style type="text/css">
-				#rah_default_category_container {
-					width: 650px;
-					margin: 0 auto;
-				}
-				#rah_default_category_container select {
-					width: 640px;
-				}
-			</style>
-EOF;
-	}
-
-/**
-	Feel my main pain... wait of, I mean, the main pane
-*/
-
-	function rah_default_category_edit($message='') {
-		global $event;
-		
-		/*
-			Check if the table exists, if not,
-			run the installer.
-		*/
-		
-		@$prefs = rah_default_category_prefs();
-		
-		if(!isset($prefs['default_category_2'])) {
-			rah_default_category_install();
-			$prefs = rah_default_category_prefs();
-		}
-		
-		extract($prefs);
-		
-		pagetop('rah_default_category',$message);
-		
-		echo 
-			'	<form method="post" action="index.php" id="rah_default_category_container">'.n.
-			'		<h1><strong>rah_default_category</strong> | Select your default article categories</h1>'.n.
-			'		<p>&#187; <a href="?event=plugin&amp;step=plugin_help&amp;name=rah_default_category">Documentation</a></p>'.n.
-			'		<p>'.n.
-			'			<label>'.n.
-			'				Category1:<br />'.n.
-			'				<select name="default_category_1">'.n.
-								rah_default_category_listing($default_category_1).n.
-			'				</select>'.n.
-			'			</label>'.n.
-			'		</p>'.n.
-			'		<p>'.n.
-			'			<label>'.n.
-			'				Category2:<br />'.n.
-			'				<select name="default_category_2">'.n.
-								rah_default_category_listing($default_category_2).n.
-			'				</select>'.n.
-			'			</label>'.n.
-			'		</p>'.n.
-			'		<p><input type="submit" value="Save" class="publish" /></p>'.n.
-			'		<input type="hidden" name="event" value="'.$event.'" />'.n.
-			'		<input type="hidden" name="step" value="rah_default_category_save" />'.n.
-			'	</form>'.n;
-	}
-
-/**
-	Lists categories
-*/
-
-	function rah_default_category_listing($default='') {
-
 		$out = array();
 		
 		$rs = 
@@ -224,46 +185,24 @@ EOF;
 				'txp_category',
 				"type = 'article' and name != 'root' order by name asc"
 			);
+			
+		$out[''] = gTxt('none');
 		
-		$out[] = '<option value="">None</option>';
+		foreach($rs as $a)
+			$out[$a['name']] = $a['title'];
 		
-		foreach($rs as $a) {
-			extract($a);
-			$out[] = 
-				'<option value="'.htmlspecialchars($name).'"'.
-					(($name == $default) ? ' selected="selected"' : '').
-				'>'.$title.'</option>';
-		}
-		
-		return implode('',$out);
+		return selectInput($name, $out, $val, '', '', $name);
 	}
 
 /**
-	Saves the preferences
+	Redirects to the preferences panel
 */
 
-	function rah_default_category_save() {
-		extract(
-			doSlash(
-				gpsa(
-					array(
-						'default_category_1',
-						'default_category_2'
-					)
-				)
-			)
-		);
-		
-		safe_update(
-			'rah_default_category',
-			"value='$default_category_1'",
-			"name='default_category_1'"
-		);
-		safe_update(
-			'rah_default_category',
-			"value='$default_category_2'",
-			"name='default_category_2'"
-		);
-
-		rah_default_category_edit('Preferences saved.');
+	function rah_default_category_prefs() {
+		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_default_category_1');
+		echo 
+			'<p id="message">'.n.
+			'	<a href="?event=prefs&amp;step=advanced_prefs#prefs-rah_default_category_1">'.gTxt('continue').'</a>'.n.
+			'</p>';
 	}
+?>
