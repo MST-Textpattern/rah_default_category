@@ -1,15 +1,19 @@
-<?php	##################
-	#
-	#	rah_default_category-plugin for Textpattern
-	#	version 0.6
-	#	by Jukka Svahn
-	#	http://rahforum.biz
-	#
-	#	Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
-	#	Licensed under GNU Genral Public License version 2
-	#	http://www.gnu.org/licenses/gpl-2.0.html
-	#
-	###################
+<?php
+
+/**
+ * Rah_default_caterogry plugin for Textpattern CMS
+ *
+ * @author Jukka Svahn
+ * @date 2011-
+ * @license GNU GPLv2
+ * @link http://rahforum.biz/plugins/rah_default_category
+ *
+ * Requires Textpattern v4.0.7 or newer.
+ *
+ * Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
+ * Licensed under GNU Genral Public License version 2
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 	if(@txpinterface == 'admin') {
 		rah_default_category_install();
@@ -20,10 +24,10 @@
 	}
 
 /**
-	Installer and uninstaller. Keeps it tidy.
-	@param $event string The admin-side event.
-	@param $step string The admin-side, plugin-lifecycle step.	
-*/
+ * Installer and uninstaller. Keeps it tidy.
+ * @param string $event The admin-side event.
+ * @param string $step The admin-side, plugin-lifecycle step.	
+ */
 
 	function rah_default_category_install($event='',$step='') {
 		
@@ -122,8 +126,8 @@
 	}
 
 /**
-	Adds the selection script to Write panel
-*/
+ * Adds the selection script to Write panel
+ */
 
 	function rah_default_category() {
 		
@@ -168,11 +172,11 @@ EOF;
 	}
 
 /**
-	Lists all available categories
-	@param $name string Preferences field's name.
-	@param $val string Currently save value
-	@return string HTML select field.
-*/
+ * Lists all available categories
+ * @param string $name Preferences field's name.
+ * @param string $val Currently save value
+ * @return string HTML select field.
+ */
 
 	function rah_default_category_list($name,$val) {
 		
@@ -194,8 +198,8 @@ EOF;
 	}
 
 /**
-	Redirects to the preferences panel
-*/
+ * Redirects to the preferences panel
+ */
 
 	function rah_default_category_prefs() {
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_default_category_1');
