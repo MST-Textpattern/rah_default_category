@@ -31,17 +31,17 @@
 
 	function rah_default_category_install($event='', $step='') {
 		
+		global $prefs;
+		
 		if($step == 'deleted') {
 			
 			safe_delete(
 				'txp_prefs',
-				"name like 'rah_default_category_%'"
+				"name like 'rah\_default\_category\_%'"
 			);
 			
 			return;
 		}
-		
-		global $prefs;
 		
 		$version = '0.6';
 		
