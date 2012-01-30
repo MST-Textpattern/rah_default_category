@@ -1,7 +1,7 @@
 <?php	##################
 	#
 	#	rah_default_category-plugin for Textpattern
-	#	version 0.2
+	#	version 0.3
 	#	by Jukka Svahn
 	#	http://rahforum.biz
 	#
@@ -10,9 +10,9 @@
 	if(@txpinterface == 'admin') {
 		register_callback('rah_default_category','admin_side','head_end');
 		register_callback('rah_default_category_css','admin_side','head_end');
-		add_privs('rah_default_category', '1,2');
-		register_tab("extensions", "rah_default_category", "Default Category");
-		register_callback("rah_default_category_page", "rah_default_category");
+		add_privs('rah_default_category','1,2');
+		register_tab('extensions','rah_default_category','Default Category');
+		register_callback('rah_default_category_page','rah_default_category');
 	}
 
 /**
@@ -22,8 +22,8 @@
 	function rah_default_category_install() {
 		safe_query(
 			"CREATE TABLE IF NOT EXISTS ".safe_pfx('rah_default_category')." (
-				`name` VARCHAR(255) NOT NULL DEFAULT '',
-				`value` VARCHAR(255) NOT NULL DEFAULT '',
+				`name` VARCHAR(255) NOT NULL,
+				`value` VARCHAR(255) NOT NULL,
 				PRIMARY KEY(`name`)
 			)"
 		);
@@ -191,7 +191,7 @@ EOF;
 			'		<p>'.n.
 			'			<label>'.n.
 			'				Category1:<br />'.n.
-			'				<select id="rah_default_category_1" name="default_category_1">'.n.
+			'				<select name="default_category_1">'.n.
 								rah_default_category_listing($default_category_1).n.
 			'				</select>'.n.
 			'			</label>'.n.
@@ -199,7 +199,7 @@ EOF;
 			'		<p>'.n.
 			'			<label>'.n.
 			'				Category2:<br />'.n.
-			'				<select id="rah_default_category_1" name="default_category_2">'.n.
+			'				<select name="default_category_2">'.n.
 								rah_default_category_listing($default_category_2).n.
 			'				</select>'.n.
 			'			</label>'.n.

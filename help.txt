@@ -2,8 +2,8 @@ h1. rah_default_category
 
 p. Rah_default_category is a tiny admin-extension for "Textpattern CMS":http://www.textpattern.com. The plugin brings the _default section_ feature to categories. With rah_default_category site authors can pick default article categories, just like you can select a default section. The plugin is an answer to a request made by "jim":http://forum.textpattern.com/viewtopic.php?id=29148.
 
-* Version: 0.2
-* Updated: 2010/08/11 4:00 AM UTC
+* Version: 0.3
+* Updated: 2010/11/02 6:20 AM UTC
 
 h3. Table of Contents
 
@@ -37,9 +37,14 @@ p. The normal plugin installation behavior stands:
 
 h3(#changelog). Changelog
 
+p. *Version 0.3*
+
+* Removed unnecessary default values from the installation query.
+* Removed no-longer used HTML IDs.
+
 p. *Version 0.2*
 
-* Fixed: conditional logic. Now doesn't reselected default categories after _article post + empty categories_ compo.
+* Fixed: conditional logic. Now doesn't reselected default categories after _article post + empty categories_ combination.
 * Removed tables from the plugin's prefs panel and changed to better layout.
 * Removed inline styles.
 * Improved installer.
