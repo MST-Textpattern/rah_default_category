@@ -1,7 +1,7 @@
 <?php	##################
 	#
 	#	rah_default_category-plugin for Textpattern
-	#	version 0.4
+	#	version 0.5
 	#	by Jukka Svahn
 	#	http://rahforum.biz
 	#
@@ -141,7 +141,7 @@
 			It's posted, don't reselect.
 		*/
 		
-		if((isset($_POST) && !empty($_POST)) || gps('ID'))
+		if((isset($_POST) && !empty($_POST) && isset($_POST['event']) && $_POST['event'] == 'article') || gps('ID'))
 			return;
 		
 		$js = 
