@@ -2,33 +2,23 @@ h1. rah_default_category
 
 p. Rah_default_category is a tiny admin-extension for "Textpattern CMS":http://www.textpattern.com. The plugin brings the _default section_ feature to categories. With rah_default_category site authors can pick default article categories, just like one can select a default section. The plugin is an answer to a feature request made by "jim":http://forum.textpattern.com/viewtopic.php?id=29148.
 
-* Version: 0.6
-* Updated: 2011/09/18 7:35 AM UTC
-
-h3. Table of Contents
-
-* "List of features":#list-of-features
-* "Requirements":#requirements
-* "Installation and usage":#installation-and-usage
-* "Changelog":#changelog
-
-h3(#list-of-features). List of features
+h2(#list-of-features). List of features
 
 * Select default categories for articles, just like you can select default section.
 * Provides easily configurable options added to Textpattern's Advanced Preferences (_Textpattern / Admin / Preferences / Advanced_). No playing with code required, all GUI(Graphical user interface) based.
 
-h3(#requirements). Requirements
+h2(#requirements). Requirements
 
 p. Rah_default_category's minimum requirements:
 
-* Textpattern 4.0.7+
+* Textpattern v4.0.7 or newer.
 * jQuery (bundled with Textpattern).
 
 p. Recommended:
 
-* Textpattern 4.2.0+
+* Textpattern 4.4.1 or newer.
 
-h3(#installation-and-usage). Installation and usage
+h2(#installation-and-usage). Installation and usage
 
 p. The normal plugin installation behavior stands:
 
@@ -38,17 +28,13 @@ p. The normal plugin installation behavior stands:
 # When the setup is done, just activate the plugin from the plugin list.
 # When done, the plugin is ready to be used. Now you can go to _Textpattern / Admin / Preferences / Advanced_ > Section: _Write Tab's Default Categories_ and pick the default categories.
 
-h3(#changelog). Changelog
+h2(#changelog). Changelog
 
-p. *Version 0.6*
-
-* Upped installer's version number for consistency sake.
-
-p. *Version 0.5*
+h3. Version 0.5 - 2011/06/29
 
 * Fixed: the issue where default values didn't show up directly after logging in. "Thank you for reporting the issue Husain":http://forum.textpattern.com/viewtopic.php?pid=242061#p242061.
 
-p. *Version 0.4*
+h3. Version 0.4 - 2011/06/29
 
 * Changed: Integrated the plugin's preferences pane to Textpattern's build in Advanced Preferences interface. The plugin no longer has own tab, but instead the preferences are located at _TXP/Admin/Preferences/Advanced_.
 * Changed: Preferences are now stored in txp_prefs table instead of its own table. The plugin comes with migration script that makes transition automatic.
@@ -57,12 +43,12 @@ p. *Version 0.4*
 * Added: Options link to the Textpattern's plugins pane.
 * For full feature compatibility requires Textpattern 4.2.0 or newer.
 
-p. *Version 0.3*
+h3. Version 0.3 - 2010/11/02
 
 * Removed unnecessary default values from the installation query.
 * Removed no-longer used HTML IDs.
 
-p. *Version 0.2*
+h3. Version 0.2 - 2010/08/11
 
 * Fixed: conditional logic. Now doesn't reselected default categories after _article post + empty categories_ combination.
 * Removed tables from the plugin's prefs panel and changed to better layout.
@@ -73,6 +59,6 @@ p. *Version 0.2*
 * Changed prefs panel event from @rah_default_category_page@ to @rah_default_category@.
 * Now requires Textpattern version 4.0.7 or newer.
 
-p. *Version 0.1*
+h3. Version 0.1 - 2008/12/11
 
 * Initial release.
