@@ -17,10 +17,10 @@
 
 	if(@txpinterface == 'admin') {
 		rah_default_category_install();
-		add_privs('plugin_prefs.rah_default_category','1,2');
-		register_callback('rah_default_category_prefs','plugin_prefs.rah_default_category');
-		register_callback('rah_default_category_install','plugin_lifecycle.rah_default_category');
-		register_callback('rah_default_category','admin_side','head_end');
+		add_privs('plugin_prefs.rah_default_category', '1,2');
+		register_callback('rah_default_category_prefs', 'plugin_prefs.rah_default_category');
+		register_callback('rah_default_category_install', 'plugin_lifecycle.rah_default_category');
+		register_callback('rah_default_category', 'admin_side', 'head_end');
 	}
 
 /**
@@ -29,7 +29,7 @@
  * @param string $step The admin-side, plugin-lifecycle step.	
  */
 
-	function rah_default_category_install($event='',$step='') {
+	function rah_default_category_install($event='', $step='') {
 		
 		if($step == 'deleted') {
 			
@@ -178,7 +178,7 @@ EOF;
  * @return string HTML select field.
  */
 
-	function rah_default_category_list($name,$val) {
+	function rah_default_category_list($name, $val) {
 		
 		$out = array();
 		
