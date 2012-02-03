@@ -144,11 +144,10 @@
 
 		echo 
 			script_js(
-				'$(document).ready(function() {'.
-					implode(n, $js).
+				'$(document).ready(function() {'.n.
+					implode(n, $js).n.
 				'});'
 			);
-EOF;
 	}
 
 /**
