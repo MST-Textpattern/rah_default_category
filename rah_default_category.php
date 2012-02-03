@@ -115,18 +115,14 @@
 		
 		global $event, $prefs;
 		
-		if(
-			$event != 'article' || 
-			!isset($prefs['rah_default_category_1']) ||
-			!isset($prefs['rah_default_category_2'])
-		)
+		if($event != 'article' || !isset($prefs['rah_default_category_1']))
 			return;
 		
 		/*
 			It's posted, don't reselect.
 		*/
 		
-		if((isset($_POST) && !empty($_POST) && isset($_POST['event']) && $_POST['event'] == 'article') || gps('ID'))
+		if((isset($_POST['event']) && $_POST['event'] == 'article') || gps('ID'))
 			return;
 		
 		$js = 
