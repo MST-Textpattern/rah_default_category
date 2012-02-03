@@ -125,27 +125,29 @@
 		if((isset($_POST['event']) && $_POST['event'] == 'article') || gps('ID'))
 			return;
 		
-		$js = 
-			(!empty($prefs['rah_default_category_1']) ? 
-				'$("#category-1 option[value=\''.str_replace("'","\'",$prefs['rah_default_category_1']).'\']").attr("selected","selected");' : ''
-			).
-			(!empty($prefs['rah_default_category_2']) ? 
-				'$("#category-2 option[value=\''.str_replace("'","\'",$prefs['rah_default_category_2']).'\']").attr("selected","selected");' : ''
-			)
-		;
+		$js = array();
+		
+		if(!empty($prefs['rah_default_category_1']))
+			$js[] =
+				'$("#category-1 option[value=\''.
+					escape_js($prefs['rah_default_category_1']).
+				'\']").attr("selected","selected");';
+		
+		if(!empty($prefs['rah_default_category_2']))
+			$js[] = 
+				'$("#category-2 option[value=\''.
+					escape_js($prefs['rah_default_category_2']).
+				'\']").attr("selected","selected");';
 		
 		if(empty($js))
 			return;
 
-		echo <<<EOF
-
-			<script type="text/javascript">
-				<!--
-				$(document).ready(function() {
-					{$js}
-				});
-				-->
-			</script>
+		echo 
+			script_js(
+				'$(document).ready(function() {'.
+					implode(n, $js).
+				'});'
+			);
 EOF;
 	}
 
