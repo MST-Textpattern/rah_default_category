@@ -8,8 +8,6 @@
  * @license GNU GPLv2
  * @link http://rahforum.biz/plugins/rah_default_category
  *
- * Requires Textpattern v4.0.7 or newer.
- *
  * Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
  * Licensed under GNU Genral Public License version 2
  * http://www.gnu.org/licenses/gpl-2.0.html
