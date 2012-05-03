@@ -149,7 +149,7 @@ class rah_default_category {
 	static public function prefs() {
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_default_category_1');
 		echo 
-			'<p id="message">'.n.
+			'<p>'.n.
 			'	<a href="?event=prefs&amp;step=advanced_prefs#prefs-rah_default_category_1">'.gTxt('continue').'</a>'.n.
 			'</p>';
 	}
