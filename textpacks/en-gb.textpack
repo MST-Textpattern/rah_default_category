@@ -1,5 +1,5 @@
 #@admin
 #Default language, en-us, en-gb
-rah_defcat => Write Tab's Default Categories
+rah_defcat => Default Article Categories
 rah_default_category_1 => Default category 1
 rah_default_category_2 => Default category 2
