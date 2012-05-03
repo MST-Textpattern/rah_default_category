@@ -114,14 +114,7 @@ class rah_default_category {
 		
 		global $event, $prefs;
 		
-		if($event != 'article' || !isset($prefs['rah_default_category_1']))
-			return;
-		
-		/*
-			It's posted, don't reselect.
-		*/
-		
-		if((isset($_POST['event']) && $_POST['event'] == 'article') || gps('ID'))
+		if($event != 'article' || (isset($_POST['event']) && $_POST['event'] == 'article') || gps('ID'))
 			return;
 		
 		$js = array();
