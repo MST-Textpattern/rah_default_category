@@ -4,7 +4,7 @@
  * Rah_default_caterogry plugin for Textpattern CMS
  *
  * @author Jukka Svahn
- * @date 2011-
+ * @date 2008-
  * @license GNU GPLv2
  * @link http://rahforum.biz/plugins/rah_default_category
  *
@@ -14,20 +14,24 @@
  */
 
 	if(@txpinterface == 'admin') {
-		rah_default_category_install();
+		rah_default_category::install();
 		add_privs('plugin_prefs.rah_default_category', '1,2');
-		register_callback('rah_default_category_prefs', 'plugin_prefs.rah_default_category');
-		register_callback('rah_default_category_install', 'plugin_lifecycle.rah_default_category');
-		register_callback('rah_default_category', 'admin_side', 'head_end');
+		register_callback(array('rah_default_category', 'prefs'), 'plugin_prefs.rah_default_category');
+		register_callback(array('rah_default_category', 'install'), 'plugin_lifecycle.rah_default_category');
+		register_callback(array('rah_default_category', 'head'), 'admin_side', 'head_end');
 	}
 
-/**
- * Installer and uninstaller. Keeps it tidy.
- * @param string $event The admin-side event.
- * @param string $step The admin-side, plugin-lifecycle step.	
- */
+class rah_default_category {
 
-	function rah_default_category_install($event='', $step='') {
+	static public $version = '0.6';
+
+	/**
+	 * Installer
+	 * @param string $event The admin-side event.
+	 * @param string $step The admin-side, plugin-lifecycle step.	
+	 */
+
+	static public function install($event='', $step='') {
 		
 		global $prefs;
 		
@@ -41,13 +45,10 @@
 			return;
 		}
 		
-		$version = '0.6';
+		$current = isset($prefs['rah_default_category_version']) ? 
+			$prefs['rah_default_category_version'] : 'base';
 		
-		$current = 
-			isset($prefs['rah_default_category_version']) ? 
-				$prefs['rah_default_category_version'] : 'base';
-		
-		if($current == $version)
+		if($current == self::$version)
 			return;
 			
 		$default = 
@@ -101,15 +102,15 @@
 			}
 		}
 		
-		set_pref('rah_default_category_version',$version,'rah_defcat',2,'',0);
-		$prefs['rah_default_category_version'] = $version;
+		set_pref('rah_default_category_version', self::$version, 'rah_defcat', 2, '', 0);
+		$prefs['rah_default_category_version'] = self::$version;
 	}
 
-/**
- * Adds the selection script to Write panel
- */
+	/**
+	 * Adds the selection script to Write panel's <head>
+	 */
 
-	function rah_default_category() {
+	static public function head() {
 		
 		global $event, $prefs;
 		
@@ -148,10 +149,23 @@
 			);
 	}
 
+	/**
+	 * Redirects to the preferences panel
+	 */
+
+	static public function prefs() {
+		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_default_category_1');
+		echo 
+			'<p id="message">'.n.
+			'	<a href="?event=prefs&amp;step=advanced_prefs#prefs-rah_default_category_1">'.gTxt('continue').'</a>'.n.
+			'</p>';
+	}
+}
+
 /**
  * Lists all available categories
  * @param string $name Preferences field's name.
- * @param string $val Currently save value
+ * @param string $val Currently saved value
  * @return string HTML select field.
  */
 
@@ -165,7 +179,7 @@
 				'txp_category',
 				"type = 'article' and name != 'root' order by name asc"
 			);
-			
+		
 		$out[''] = gTxt('none');
 		
 		foreach($rs as $a)
@@ -174,15 +188,4 @@
 		return selectInput($name, $out, $val, '', '', $name);
 	}
 
-/**
- * Redirects to the preferences panel
- */
-
-	function rah_default_category_prefs() {
-		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_default_category_1');
-		echo 
-			'<p id="message">'.n.
-			'	<a href="?event=prefs&amp;step=advanced_prefs#prefs-rah_default_category_1">'.gTxt('continue').'</a>'.n.
-			'</p>';
-	}
 ?>
