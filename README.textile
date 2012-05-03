@@ -12,6 +12,7 @@ h2(#requirements). Requirements
 p. Rah_default_category's minimum requirements:
 
 * Textpattern v4.4.1 or newer.
+* PHP5
 
 h2(#installation-and-usage). Installation and usage
 
