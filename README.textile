@@ -27,8 +27,9 @@ h2(#changelog). Changelog
 
 h3. Version 0.6 - upcoming
 
-* Now uses @escape_js()@ to make sure JavaScript strings are valid.
-* Uses external Textpack file run on installation instead of embedded language strings.
+* Improved: Now uses @escape_js()@ to make sure JavaScript strings are valid.
+* Improved: Language strings aren't embedded to the source code, but uses external Textpack that are ran during install.
+* Changed: Wrapped functions to a class.
 
 h3. Version 0.5 - 2011/06/29
 
