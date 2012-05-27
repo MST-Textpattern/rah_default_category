@@ -173,17 +173,17 @@ class rah_default_category {
 		
 		$rs = 
 			safe_rows(
-				'name,title',
+				'name, title',
 				'txp_category',
 				"type = 'article' AND name != 'root' ORDER BY name asc"
 			);
 		
 		$out[''] = '';
 		
-		foreach($rs as $a)
+		foreach($rs as $a) {
 			$out[$a['name']] = $a['title'];
+		}
 		
 		return selectInput($name, $out, $val, '', '', $name);
 	}
-
 ?>
