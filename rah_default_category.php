@@ -178,7 +178,7 @@ class rah_default_category {
 				"type = 'article' AND name != 'root' ORDER BY name asc"
 			);
 		
-		$out[''] = gTxt('none');
+		$out[''] = '';
 		
 		foreach($rs as $a)
 			$out[$a['name']] = $a['title'];
