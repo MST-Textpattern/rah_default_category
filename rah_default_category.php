@@ -70,7 +70,7 @@ class rah_default_category {
 					'1=1'
 				);
 		
-			if(!empty($rs) && is_array($rs)) {
+			if($rs && is_array($rs)) {
 				foreach($rs as $a)
 					if(isset($default[$a['name']]))
 						$default[$a['name']] = $a['value'];
@@ -131,7 +131,7 @@ class rah_default_category {
 					escape_js($prefs['rah_default_category_2']).
 				'\']").attr("selected","selected");';
 		
-		if(empty($js))
+		if(!$js)
 			return;
 
 		echo 
