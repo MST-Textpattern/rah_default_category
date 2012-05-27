@@ -62,7 +62,6 @@ class rah_default_category {
 		*/
 		
 		if($current == 'base') {
-		
 			@$rs = 
 				safe_rows(
 					'name, value',
@@ -71,9 +70,11 @@ class rah_default_category {
 				);
 		
 			if($rs && is_array($rs)) {
-				foreach($rs as $a)
-					if(isset($default[$a['name']]))
+				foreach($rs as $a) {
+					if(isset($default[$a['name']])) {
 						$default[$a['name']] = $a['value'];
+					}
+				}
 			
 				@safe_query(
 					'DROP TABLE IF EXISTS '.safe_pfx('rah_default_category')
@@ -85,21 +86,25 @@ class rah_default_category {
 			Add preference strings
 		*/
 		
-		foreach($default as $key => $val) {
-			if(!isset($prefs['rah_' . $key])) {
+		$position = 245;
+		
+		foreach($default as $name => $val) {
+			if(!isset($prefs['rah_'.$name])) {
 				safe_insert(
 					'txp_prefs',
 					"prefs_id=1,
-					name='rah_".$key."',
+					name='rah_{$name}',
 					val='".doSlash($val)."',
 					type=1,
 					event='rah_defcat',
 					html='rah_default_category_list',
-					position=". ($key == 'default_category_1' ? 245 : 246)
+					position={$position}"
 				);
 				
-				$prefs['rah_' . $key ] = $val;
+				$prefs['rah_'.$name] = $val;
 			}
+			
+			$position++;
 		}
 		
 		set_pref('rah_default_category_version', self::$version, 'rah_defcat', 2, '', 0);
@@ -170,7 +175,7 @@ class rah_default_category {
 			safe_rows(
 				'name,title',
 				'txp_category',
-				"type = 'article' and name != 'root' order by name asc"
+				"type = 'article' AND name != 'root' ORDER BY name asc"
 			);
 		
 		$out[''] = gTxt('none');
