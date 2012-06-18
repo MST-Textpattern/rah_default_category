@@ -170,22 +170,6 @@ class rah_default_category {
  */
 
 	function rah_default_category_list($name, $val) {
-		
-		$out = array();
-		
-		$rs = 
-			safe_rows(
-				'name, title',
-				'txp_category',
-				"type = 'article' AND name != 'root' ORDER BY name asc"
-			);
-		
-		$out[''] = '';
-		
-		foreach($rs as $a) {
-			$out[$a['name']] = $a['title'];
-		}
-		
-		return selectInput($name, $out, $val, '', '', $name);
+		return treeSelectInput($name, getTree('root', 'article'), $val, $name, 35);
 	}
 ?>
