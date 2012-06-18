@@ -124,17 +124,19 @@ class rah_default_category {
 		
 		$js = array();
 		
-		if(!empty($prefs['rah_default_category_1']))
+		if(!empty($prefs['rah_default_category_1'])) {
 			$js[] =
 				'$("#category-1 option[value=\''.
 					escape_js($prefs['rah_default_category_1']).
 				'\']").attr("selected","selected");';
+		}
 		
-		if(!empty($prefs['rah_default_category_2']))
+		if(!empty($prefs['rah_default_category_2'])) {
 			$js[] = 
 				'$("#category-2 option[value=\''.
 					escape_js($prefs['rah_default_category_2']).
 				'\']").attr("selected","selected");';
+		}
 		
 		if(!$js)
 			return;
