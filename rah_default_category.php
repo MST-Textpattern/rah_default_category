@@ -46,9 +46,9 @@ class rah_default_category {
 		}
 		
 		$current = isset($prefs['rah_default_category_version']) ? 
-			$prefs['rah_default_category_version'] : 'base';
+			(string) $prefs['rah_default_category_version'] : 'base';
 		
-		if($current == self::$version)
+		if($current === self::$version)
 			return;
 			
 		$default = 
