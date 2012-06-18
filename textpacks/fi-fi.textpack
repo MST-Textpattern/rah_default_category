@@ -1,0 +1,5 @@
+#@admin
+#@language fi-fi
+rah_defcat => Oletus artikkelikategoriat
+rah_default_category_1 => Oletus kategoria 1
+rah_default_category_2 => Oletus kategoria 2
