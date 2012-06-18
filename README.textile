@@ -28,10 +28,12 @@ h2. Changelog
 
 h3. Version 0.6 - upcoming
 
+* Added: Finnish translation.
 * Improved: Now uses @escape_js()@ to make sure JavaScript strings are valid.
 * Improved: Language strings aren't embedded to the source code, but uses external Textpack that are ran during install.
 * Changed: Wrapped functions to a class.
-* Changed: Renamed Preference group to _Default Article Categories_.
+* Changed: Renamed Preference group to _Default article categories_.
+* Changed: In preferences displays categories as a tree. Child categories are listed under the parent.
 
 h3. Version 0.5 - 2011/06/29
 
