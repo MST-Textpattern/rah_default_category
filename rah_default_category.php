@@ -14,11 +14,7 @@
  */
 
 	if(@txpinterface == 'admin') {
-		rah_default_category::install();
-		add_privs('plugin_prefs.rah_default_category', '1,2');
-		register_callback(array('rah_default_category', 'prefs'), 'plugin_prefs.rah_default_category');
-		register_callback(array('rah_default_category', 'install'), 'plugin_lifecycle.rah_default_category');
-		register_callback(array('rah_default_category', 'head'), 'admin_side', 'head_end');
+		new rah_default_category();
 	}
 
 class rah_default_category {
@@ -112,10 +108,22 @@ class rah_default_category {
 	}
 
 	/**
+	 * Constructor
+	 */
+
+	public function __construct() {
+		rah_default_category::install();
+		add_privs('plugin_prefs.'.__CLASS__, '1,2');
+		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
+		register_callback(array($this, 'prefs'), 'plugin_prefs.'.__CLASS__);
+		register_callback(array($this, 'head'), 'admin_side', 'head_end');
+	}
+
+	/**
 	 * Adds the selection script to Write panel's <head>
 	 */
 
-	static public function head() {
+	public function head() {
 		
 		global $event, $prefs;
 		
@@ -153,7 +161,7 @@ class rah_default_category {
 	 * Redirects to the preferences panel
 	 */
 
-	static public function prefs() {
+	public function prefs() {
 		header('Location: ?event=prefs&step=advanced_prefs#prefs-rah_default_category_1');
 		echo 
 			'<p>'.n.
