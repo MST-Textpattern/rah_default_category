@@ -41,70 +41,43 @@ class rah_default_category {
 			return;
 		}
 		
-		$current = isset($prefs['rah_default_category_version']) ? 
-			(string) $prefs['rah_default_category_version'] : 'base';
-		
-		if($current === self::$version)
+		if((string) get_pref(__CLASS__.'_version') === self::$version) {
 			return;
-			
-		$default = 
+		}
+		
+		$opt = 
 			array(
 				'default_category_1' => '',
 				'default_category_2' => ''
 			);
 		
-		/*
-			Migrate preferences format from <= 0.3 to >= 0.4
-		*/
+		@$rs = safe_rows('name, value', 'rah_default_category', '1=1');
 		
-		if($current == 'base') {
-			@$rs = 
-				safe_rows(
-					'name, value',
-					'rah_default_category',
-					'1=1'
-				);
-		
-			if($rs && is_array($rs)) {
-				foreach($rs as $a) {
-					if(isset($default[$a['name']])) {
-						$default[$a['name']] = $a['value'];
-					}
+		if($rs && is_array($rs)) {
+			foreach($rs as $a) {
+				if(isset($opt[$a['name']])) {
+					$opt[$a['name']] = $a['value'];
 				}
-			
-				@safe_query(
-					'DROP TABLE IF EXISTS '.safe_pfx('rah_default_category')
-				);
 			}
+			
+			@safe_query('DROP TABLE IF EXISTS '.safe_pfx(__CLASS__));
 		}
-		
-		/*
-			Add preference strings
-		*/
-		
+	
 		$position = 245;
 		
-		foreach($default as $name => $val) {
-			if(!isset($prefs['rah_'.$name])) {
-				safe_insert(
-					'txp_prefs',
-					"prefs_id=1,
-					name='rah_{$name}',
-					val='".doSlash($val)."',
-					type=1,
-					event='rah_defcat',
-					html='rah_default_category_list',
-					position={$position}"
-				);
-				
-				$prefs['rah_'.$name] = $val;
+		foreach($opt as $name => $value) {
+			$name = 'rah_'.$name;
+			
+			if(!isset($prefs[$name])) {
+				set_pref($name, $value, 'rah_defcat', PREF_ADVANCED, 'rah_default_category_list', $position);
+				$prefs[$name] = $value;
 			}
 			
 			$position++;
 		}
 		
-		set_pref('rah_default_category_version', self::$version, 'rah_defcat', 2, '', 0);
-		$prefs['rah_default_category_version'] = self::$version;
+		set_pref(__CLASS__.'_version', self::$version, 'rah_defcat', 2, '', 0);
+		$prefs[__CLASS__.'_version'] = self::$version;
 	}
 
 	/**
