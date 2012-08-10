@@ -1,0 +1,5 @@
+#@admin
+#@language fr-fr
+rah_defcat => Catégories d'articles par défaut
+rah_default_category_1 => Catégorie 1 par défaut
+rah_default_category_2 => Catégorie 2 par défaut
