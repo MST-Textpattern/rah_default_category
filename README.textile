@@ -31,6 +31,7 @@ h2. Changelog
 h3. Version 0.6 - upcoming
 
 * Added: Finnish translation.
+* Added: French translation by "Patrick Lefevre":https://twitter.com/lowel.
 * Improved: Now uses @escape_js()@ to make sure JavaScript strings are valid.
 * Improved: Language strings aren't embedded to the source code, but uses external Textpack that are ran during install.
 * Changed: Wrapped functions to a class.
