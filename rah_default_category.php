@@ -13,9 +13,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-	if(@txpinterface == 'admin') {
-		new rah_default_category();
-	}
+	new rah_default_category();
 
 class rah_default_category {
 
