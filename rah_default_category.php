@@ -85,7 +85,6 @@ class rah_default_category {
 	 */
 
 	public function __construct() {
-		rah_default_category::install();
 		add_privs('plugin_prefs.'.__CLASS__, '1,2');
 		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
 		register_callback(array($this, 'prefs'), 'plugin_prefs.'.__CLASS__);
