@@ -2,29 +2,23 @@ h1. rah_default_category
 
 p. "Project page":http://rahforum.biz/plugins/rah_default_category | "Twitter":http://twitter.com/gocom | "GitHub":https://github.com/gocom/rah_default_category | "Support forum":http://forum.textpattern.com/viewtopic.php?id=29154 | "Donate":http://rahforum.biz/donate/rah_default_category
 
-p. Rah_default_category is a tiny admin-extension for "Textpattern CMS":http://www.textpattern.com. The plugin brings the default section feature to categories. The extension adds new options to Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences that allow site admins can set default article categories, just like one can select a default article section. Selected default categories are then used as the default option on the "Write":http://textpattern.net/wiki/index.php?title=Write panel. The plugin is an answer to a feature request made by "jim":http://forum.textpattern.com/viewtopic.php?id=29148.
-
-h2. List of features
-
-* Select default categories for articles, just like you can select a default section.
-* Provides easily configurable options added to Textpattern's Advanced Preferences (_Textpattern / Admin / Preferences / Advanced > Default Article Categories_).
+p. Rah_default_category is a tiny admin-extension for "Textpattern CMS":http://www.textpattern.com. The plugin brings the default section feature to categories. The extension adds new options to Textpattern's "Advanced Preferences":http://textpattern.net/wiki/index.php?title=Advanced_Preferences that allow site admins set default article categories, just like one can select a default article section. Selected default categories are then used as the default option on the "Write":http://textpattern.net/wiki/index.php?title=Write panel.
 
 h2. Requirements
 
 p. Rah_default_category's minimum requirements:
 
 * Textpattern v4.4.0 or newer.
-* PHP 5.2
+* PHP 5.2 or newer.
 
-h2. Installation and usage
+h2. Installing
 
-p. The normal plugin installation behavior stands:
+p. Rah_default_category's installation follows the standard plugin installation steps.
 
-# Download the plugin installation code file.
-# Navigate to your Textpattern installation's _Plugins_ page (TXP/Admin/Plugins).
-# Copy and paste the plugin code to the _Install plugin_ box and run the automated setup.
-# When the setup is done, just activate the plugin from the plugin list.
-# When done, the plugin is ready to be used. Now you can go to _Textpattern / Admin / Preferences / Advanced_ > Section: _Default Article Categories_ and pick the default categories.
+# Download the plugin installation code.
+# Copy and paste the installation code into the _Install plugin_ box of your Textpattern Plugin pane.
+# Run the automated setup.
+# After the setup is done, activate the plugin. Done.
 
 h2. Changelog
 
