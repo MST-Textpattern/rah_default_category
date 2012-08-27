@@ -22,7 +22,7 @@ p. Rah_default_category's installation follows the standard plugin installation 
 
 h2. Changelog
 
-h3. Version 0.6 - upcoming
+h3. Version 0.6 - 2012/08/27
 
 * Added: Finnish translation.
 * Added: French translation by "Patrick Lefevre":https://twitter.com/lowel.
@@ -31,6 +31,7 @@ h3. Version 0.6 - upcoming
 * Changed: Wrapped functions to a class.
 * Changed: Renamed Preference group to _Default article categories_.
 * Changed: In preferences displays categories as a tree. Child categories are listed under the parent.
+* Fully compatible with Textpattern v4.5.
 
 h3. Version 0.5 - 2011/06/29
 

@@ -3,7 +3,7 @@
 	<name>rah_default_category</name>
 	<description>Select a default article category</description>
 
-	<version>0.5</version>
+	<version>0.6</version>
 	<type>3</type>
 
 	<author>Jukka Svahn</author>
